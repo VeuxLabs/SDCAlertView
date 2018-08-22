@@ -285,8 +285,8 @@ public class AlertController: UIViewController {
 
     @objc
     private func keyboardChange(_ notification: Notification) {
-        let oldFrameValue = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue
-        let newFrameValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
+        let oldFrameValue = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
+        let newFrameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
 
         guard let oldFrame = oldFrameValue?.cgRectValue, let newFrame = newFrameValue?.cgRectValue else {
             return
@@ -301,11 +301,11 @@ public class AlertController: UIViewController {
             return
         }
 
-        let curve = notification.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
-        let duration = notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber
+        let curve = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
+        let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber
 
         UIView.animate(withDuration: duration?.doubleValue ?? 0, delay: 0,
-                       options: UIViewAnimationOptions(rawValue: curve?.uintValue ?? 0),
+                       options: UIView.AnimationOptions(rawValue: curve?.uintValue ?? 0),
                        animations: self.view.layoutIfNeeded, completion: nil)
     }
 
